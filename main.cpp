@@ -7,6 +7,8 @@
 #include <ncurses.h>
 #include <atasmart.h>
 #include <sys/signal.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <dirent.h>
 
 constexpr int const STATUS_WIDTH = 80;
@@ -380,7 +382,11 @@ void actionWINCH(int)
 int main()
 {
 	setlocale(LC_ALL, "");
-
+	if (geteuid() != 0) {
+	        std::cerr << "If you are non-root user, please use sudo or doas or become root." << std::endl;
+		return 1;
+        }
+	
 	int select = 0;
 	int smart_ret = 0;
 	std::vector<SMART> smartList;
@@ -416,7 +422,6 @@ int main()
 	if (smartList.size() == 0)
 	{
 		std::cerr << "No S.M.A.R.T readable devices." << std::endl;
-		std::cerr << "If you are non-root user, please use sudo or become root." << std::endl;
 		return 1;
 	}
 	// Init ncurses
