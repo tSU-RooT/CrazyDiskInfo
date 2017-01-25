@@ -380,21 +380,6 @@ void actionWINCH(int)
 int main()
 {
 	setlocale(LC_ALL, "");
-	initscr();
-	cbreak();
-	noecho();
-	curs_set(0);
-	getmaxyx(stdscr, height, width);
-
-	start_color();
-	init_pair(1, COLOR_BLACK, COLOR_CYAN);
-	init_pair(2, COLOR_BLACK, COLOR_YELLOW);
-	init_pair(3, COLOR_WHITE, COLOR_RED);
-	init_pair(4, COLOR_CYAN, COLOR_BLACK);
-	init_pair(5, COLOR_BLACK, COLOR_YELLOW);
-	init_pair(6, COLOR_WHITE, COLOR_RED);
-	init_pair(7, COLOR_BLACK, COLOR_GREEN);
-	init_pair(8, COLOR_YELLOW, COLOR_BLACK);
 
 	int select = 0;
 	int smart_ret = 0;
@@ -430,12 +415,27 @@ int main()
 
 	if (smartList.size() == 0)
 	{
-		endwin();
 		std::cerr << "No S.M.A.R.T readable devices." << std::endl;
 		std::cerr << "If you are non-root user, please use sudo or become root." << std::endl;
 		return 1;
 	}
+	// Init ncurses
+	initscr();
+	cbreak();
+	noecho();
+	curs_set(0);
+	getmaxyx(stdscr, height, width);
 
+	start_color();
+	init_pair(1, COLOR_BLACK, COLOR_CYAN);
+	init_pair(2, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(3, COLOR_WHITE, COLOR_RED);
+	init_pair(4, COLOR_CYAN, COLOR_BLACK);
+	init_pair(5, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(6, COLOR_WHITE, COLOR_RED);
+	init_pair(7, COLOR_BLACK, COLOR_GREEN);
+	init_pair(8, COLOR_YELLOW, COLOR_BLACK);
+	
 	WINDOW * windowVersion;
 	windowVersion = newwin(1, width, 0, 0);
 
